@@ -10,6 +10,12 @@ class Session {
      */
     public static function start() {
         if (session_status() === PHP_SESSION_NONE) {
+            // Session lasts 1 year of inactivity
+            ini_set('session.gc_maxlifetime', 31536000);  // 365 days in seconds
+
+            // Cookie lasts 1 year (even if browser closes)
+            ini_set('session.cookie_lifetime', 31536000);
+
             session_start();
         }
     }
