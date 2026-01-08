@@ -1,0 +1,16 @@
+{
+    "name": "benjaminkobjolke/file-downloads-webinterface",
+    "description": "APK/File Download Manager Web Interface",
+    "type": "project",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "D:/GIT/BenjaminKobjolke/php-simple-login"
+        }
+    ],
+    "require": {
+        "benjaminkobjolke/php-simple-login": "*"
+    }
+}

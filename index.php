@@ -4,31 +4,22 @@
  * Front Controller
  */
 
-// Load configuration first
+// Load Composer autoloader
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Load configuration
 require_once __DIR__ . '/config.php';
 
 // Load dependencies
-require_once __DIR__ . '/includes/Session.php';
 require_once __DIR__ . '/includes/FileScanner.php';
-require_once __DIR__ . '/includes/AuthController.php';
 require_once __DIR__ . '/includes/helpers.php';
 
-// Initialize session
-Session::start();
+// Require authentication - shows login page if not authenticated
+use BenjaminKobjolke\SimpleLogin\SimpleLogin;
+SimpleLogin::requireAuth();
 
-// Handle authentication requests
-AuthController::handleLogin();
-AuthController::handleLogout();
-
-// Check authentication status
-$isLoggedIn = Session::isAuthenticated();
-
-// API endpoint for fetching files
+// API endpoint for fetching files (already authenticated via requireAuth)
 if (isset($_GET['api']) && $_GET['api'] === 'files') {
-    if (!$isLoggedIn) {
-        http_response_code(401);
-        exit;
-    }
     header('Content-Type: application/json');
     $scanner = new FileScanner();
     echo json_encode($scanner->getFiles());
@@ -49,19 +40,6 @@ $files = $scanner->getFiles();
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-notifications-enabled="<?= CONFIG_ENABLE_NOTIFICATIONS ? 'true' : 'false' ?>" data-notification-sound="<?= escapeHtml(CONFIG_NOTIFICATION_SOUND) ?>" data-refresh-interval="<?= CONFIG_REFRESH_INTERVAL ?>">
-    <?php if (!$isLoggedIn): ?>
-    <!-- Login Form -->
-    <div class="login-overlay">
-        <div class="login-container">
-            <div class="login-icon">🔒</div>
-            <h2>Enter Password</h2>
-            <form method="POST" action="">
-                <input type="password" name="password" placeholder="Password" autocomplete="off" autofocus required>
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    </div>
-    <?php else: ?>
     <!-- Main App -->
     <div class="container">
         <header>
@@ -166,6 +144,5 @@ $files = $scanner->getFiles();
     <script src="js/refresh.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/app.js"></script>
-    <?php endif; ?>
 </body>
 </html>

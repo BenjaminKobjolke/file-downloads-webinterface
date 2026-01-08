@@ -16,9 +16,12 @@ define('CONFIG_FILE_TYPES', ['apk']);
 //   'D:/Downloads'            - Absolute path
 define('CONFIG_SOURCE_FOLDER', __DIR__ . '/downloads');
 
-// Authentication password
+// Authentication (handled by benjaminkobjolke/php-simple-login)
 // Change this to your desired password
-define('CONFIG_PASSWORD', 'downapps');
+define('SIMPLE_LOGIN_PASSWORD', 'your-password-here');
+
+// Optional: Redirect URL after successful login (default: same page)
+// define('SIMPLE_LOGIN_REDIRECT', '/dashboard.php');
 
 // Sound notifications for new uploads
 // Set to true to play a sound when new files are uploaded or modified

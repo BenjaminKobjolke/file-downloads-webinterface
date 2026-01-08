@@ -1,4 +1,6 @@
 config.php
 downloads
+vendor/
+composer.lock
 .claude
 assets/newupload.mp3
