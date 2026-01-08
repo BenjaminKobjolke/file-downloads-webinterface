@@ -172,7 +172,7 @@ define('CONFIG_REFRESH_INTERVAL', 30);
 
 - Change the default password (`SIMPLE_LOGIN_PASSWORD`) in `config.php` immediately
 - Use a strong password for production environments
-- Ensure `config.php` is not publicly accessible (it's protected by `.htaccess` if using Apache)
+- `config.php` is protected from direct access via `.htaccess` (Apache)
 - Keep the application updated
 - Consider using HTTPS for production deployments
 
