@@ -15,7 +15,8 @@ A simple and elegant web interface for managing and downloading files (APK, PDF,
 
 ## Requirements
 
-- PHP 7.0 or higher
+- PHP 7.4 or higher
+- Composer
 - Web server (Apache, Nginx, or built-in PHP server)
 - Write permissions for session storage
 
@@ -28,7 +29,15 @@ git clone <repository-url>
 cd file-downloads-webinterface
 ```
 
-### 2. Configure the Application
+### 2. Install Dependencies
+
+```bash
+composer install
+```
+
+This installs [php-simple-login](https://github.com/BenjaminKobjolke/php-simple-login) for authentication.
+
+### 3. Configure the Application
 
 Copy the example configuration file to create your own config:
 
@@ -36,7 +45,7 @@ Copy the example configuration file to create your own config:
 cp config_example.php config.php
 ```
 
-### 3. Edit Configuration
+### 4. Edit Configuration
 
 Open `config.php` and customize the settings:
 
@@ -47,8 +56,11 @@ define('CONFIG_FILE_TYPES', ['apk']);
 // Source folder containing your files
 define('CONFIG_SOURCE_FOLDER', __DIR__ . '/downloads');
 
-// Authentication password
-define('CONFIG_PASSWORD', 'your-secure-password');
+// Authentication password (used by php-simple-login)
+define('SIMPLE_LOGIN_PASSWORD', 'your-secure-password');
+
+// Optional: Redirect URL after login (default: same page)
+// define('SIMPLE_LOGIN_REDIRECT', '/dashboard.php');
 
 // Enable sound notifications for new uploads
 define('CONFIG_ENABLE_NOTIFICATIONS', false);
@@ -60,7 +72,7 @@ define('CONFIG_NOTIFICATION_SOUND', 'assets/newupload.mp3');
 define('CONFIG_REFRESH_INTERVAL', 30);
 ```
 
-### 4. Create Downloads Folder
+### 5. Create Downloads Folder
 
 Create a folder to store your downloadable files:
 
@@ -70,7 +82,7 @@ mkdir downloads
 
 Or use an existing folder by updating `CONFIG_SOURCE_FOLDER` in `config.php`.
 
-### 5. Set Permissions (Linux/Mac)
+### 6. Set Permissions (Linux/Mac)
 
 Ensure the web server has read permissions for your files:
 
@@ -158,7 +170,7 @@ define('CONFIG_REFRESH_INTERVAL', 30);
 
 ## Security Notes
 
-- Change the default password in `config.php` immediately
+- Change the default password (`SIMPLE_LOGIN_PASSWORD`) in `config.php` immediately
 - Use a strong password for production environments
 - Ensure `config.php` is not publicly accessible (it's protected by `.htaccess` if using Apache)
 - Keep the application updated
